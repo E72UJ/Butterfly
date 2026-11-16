@@ -3,9 +3,14 @@ site_description: 阿卡迪亚蝶梦 — 基于 Godot 4.7 与 Konado 的视觉�
 site_author: furau
 site_url: https://butterfly.seer2.org/
 
+extra_css:
+  - stylesheets/extra.css
+
 theme:
   name: material
   language: zh
+  # 不加载 Google Fonts：该域名在国内不可达且阻塞首屏渲染，改用系统字体
+  font: false
   features:
     - navigation.instant
     - navigation.tracking

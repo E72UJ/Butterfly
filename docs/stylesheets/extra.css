@@ -1,0 +1,16 @@
+/*
+ * 站点自定义样式
+ *
+ * 已关闭 Material 的 Google Fonts（mkdocs.yml 里 theme.font: false），
+ * 这里显式声明系统字体栈，避免不同平台回退到宋体/Times 等不协调的默认字体。
+ */
+
+:root {
+  --md-text-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+    "Noto Sans CJK SC", Roboto, Helvetica, Arial, sans-serif;
+  --md-code-font:
+    "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
