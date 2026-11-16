@@ -15,7 +15,8 @@ set -euo pipefail
 
 DEPLOY_HOST="${DEPLOY_HOST:-root@43.153.169.236}"
 DEPLOY_PORT="${DEPLOY_PORT:-22}"
-DEPLOY_PATH="${DEPLOY_PATH:-/www/wwwroot/butterfly/}"
+DEPLOY_PATH="${DEPLOY_PATH:-/www/wwwroot/Butterfly.seer2.org/}"
+DEPLOY_OWNER="${DEPLOY_OWNER:-www:www}"
 
 DRY_RUN=""
 if [[ "${1:-}" == "--dry-run" ]]; then
@@ -41,11 +42,11 @@ else
 fi
 echo "== 使用解释器：${PY} =="
 
-echo "== 1/3 构建站点 =="
+echo "== 1/4 构建站点 =="
 "$PY" -m mkdocs build --strict
 echo "   产物大小：$(du -sh site | cut -f1)"
 
-echo "== 2/3 同步到 ${DEPLOY_HOST}:${DEPLOY_PATH} =="
+echo "== 2/4 同步到 ${DEPLOY_HOST}:${DEPLOY_PATH} =="
 # --delete 让服务器与本地完全一致，删掉已移除的旧页面
 # --exclude 排除系统垃圾文件
 rsync -az --delete $DRY_RUN \
@@ -55,6 +56,15 @@ rsync -az --delete $DRY_RUN \
   site/ "${DEPLOY_HOST}:${DEPLOY_PATH}"
 
 if [[ -z "$DRY_RUN" ]]; then
-  echo "== 3/3 完成 =="
+  echo "== 3/4 修正文件属主与权限 =="
+  # rsync 以 root 运行会上传成 root:root，宝塔面板和 nginx 需要 www:www
+  # 目录 755、文件 644，保证可读且目录可进入
+  ssh -p "${DEPLOY_PORT}" "${DEPLOY_HOST}" \
+    "chown -R ${DEPLOY_OWNER} '${DEPLOY_PATH}' && \
+     find '${DEPLOY_PATH}' -type d -exec chmod 755 {} + && \
+     find '${DEPLOY_PATH}' -type f -exec chmod 644 {} +"
+  echo "   属主已设为 ${DEPLOY_OWNER}"
+
+  echo "== 4/4 完成 =="
   echo "   https://butterfly.seer2.org/"
 fi
