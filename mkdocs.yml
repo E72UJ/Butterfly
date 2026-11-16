@@ -46,7 +46,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.arithmatex:
@@ -57,3 +61,7 @@ plugins:
 
 nav:
   - 首页: index.md
+  - 开发指南:
+      - 项目结构: guide/structure.md
+      - 房间过场桥接: guide/room-bridge.md
+      - 全局回退系统: guide/rollback.md
