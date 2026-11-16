@@ -9,6 +9,7 @@
 #           DEPLOY_HOST   默认 root@43.153.169.236
 #           DEPLOY_PORT   默认 22
 #           DEPLOY_PATH   默认 /www/wwwroot/butterfly/
+#           PYTHON        指定解释器（默认自动探测）
 #
 set -euo pipefail
 
@@ -24,8 +25,24 @@ fi
 
 cd "$(dirname "$0")"
 
+# ---- 探测可用的 Python 解释器 ----
+# 优先项目内的 .venv，其次系统 python3，最后用 PATH 里的 mkdocs
+if [[ -n "${PYTHON:-}" ]]; then
+  PY="$PYTHON"
+elif [[ -x ".venv/bin/python" ]] && .venv/bin/python -c "import mkdocs" 2>/dev/null; then
+  PY=".venv/bin/python"
+elif python3 -c "import mkdocs" 2>/dev/null; then
+  PY="python3"
+else
+  echo "错误：找不到可用的 MkDocs 环境。" >&2
+  echo "请先初始化虚拟环境：" >&2
+  echo "  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
+  exit 1
+fi
+echo "== 使用解释器：${PY} =="
+
 echo "== 1/3 构建站点 =="
-python3 -m mkdocs build --strict
+"$PY" -m mkdocs build --strict
 echo "   产物大小：$(du -sh site | cut -f1)"
 
 echo "== 2/3 同步到 ${DEPLOY_HOST}:${DEPLOY_PATH} =="
