@@ -52,6 +52,8 @@ echo "== 2/4 同步到 ${DEPLOY_HOST}:${DEPLOY_PATH} =="
 rsync -az --delete $DRY_RUN \
   --exclude '.DS_Store' \
   --exclude 'Thumbs.db' \
+  --exclude '.user.ini' \
+  --exclude '.well-known/' \
   -e "ssh -p ${DEPLOY_PORT}" \
   site/ "${DEPLOY_HOST}:${DEPLOY_PATH}"
 
@@ -59,10 +61,11 @@ if [[ -z "$DRY_RUN" ]]; then
   echo "== 3/4 修正文件属主与权限 =="
   # rsync 以 root 运行会上传成 root:root，宝塔面板和 nginx 需要 www:www
   # 目录 755、文件 644，保证可读且目录可进入
+  # .user.ini 被宝塔设为不可变（chattr +i），chown/chmod 会失败，故整体容错
   ssh -p "${DEPLOY_PORT}" "${DEPLOY_HOST}" \
-    "chown -R ${DEPLOY_OWNER} '${DEPLOY_PATH}' && \
-     find '${DEPLOY_PATH}' -type d -exec chmod 755 {} + && \
-     find '${DEPLOY_PATH}' -type f -exec chmod 644 {} +"
+    "chown -R ${DEPLOY_OWNER} '${DEPLOY_PATH}' 2>/dev/null || true; \
+     find '${DEPLOY_PATH}' -type d -exec chmod 755 {} + 2>/dev/null || true; \
+     find '${DEPLOY_PATH}' -type f -exec chmod 644 {} + 2>/dev/null || true"
   echo "   属主已设为 ${DEPLOY_OWNER}"
 
   echo "== 4/4 完成 =="
