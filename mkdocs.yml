@@ -2,6 +2,8 @@ site_name: 阿卡迪亚蝶梦 Arcadian Butterfly Dream 开发配套资料
 site_description: 阿卡迪亚蝶梦 — 基于 Godot 4.7 的中文文字冒险游戏
 site_author: furau
 site_url: https://butterfly.seer2.org/
+repo_url: https://github.com/E72UJ/Butterfly
+repo_name: E72UJ/Butterfly
 
 extra_css:
   - stylesheets/extra.css
