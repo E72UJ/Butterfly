@@ -64,6 +64,20 @@ markdown_extensions:
 
 plugins:
   - search
+  - blog:
+      blog_dir: devlog
+      blog_toc: true
+      post_dir: "{blog}/posts"
+      post_url_format: "{date}/{slug}"
+      post_date_format: "yyyy 年 M 月 d 日"
+      post_readtime: false
+      archive: true
+      archive_name: 归档
+      archive_url_format: "archive/{date}"
+      archive_date_format: "yyyy 年"
+      categories: true
+      categories_name: 分类
+      authors: false
 
 nav:
   - 首页: index.md
@@ -71,3 +85,4 @@ nav:
       - 项目结构: guide/structure.md
       - 房间过场桥接: guide/room-bridge.md
       - 全局回退系统: guide/rollback.md
+  - 开发日志: devlog/index.md
