@@ -31,5 +31,5 @@
 文档里的路径、类名、版本号都取自实际工程，但代码会演进，文档难免滞后。如果发现对不上的地方：
 
 - 提 Issue：<https://github.com/E72UJ/Butterfly/issues>
-- 或者联系维护者：<furau@qq.com>
+- 联系维护者furau@qq.com
 
