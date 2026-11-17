@@ -10,7 +10,9 @@ https://godothub.com/zh/download
 
 ## 二、获取工程包
 
-临时工程包
+临时工程包 https://gitee.com/Furau/arcadian-butterfly-dream
+
+或者访问内部企鹅群获取，群聊名称 阿卡迪亚蝶梦归档群
 
 ## 三、首次导入
 
