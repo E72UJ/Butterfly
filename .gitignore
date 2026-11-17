@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 site/
+site.zip
 .cache/
 .DS_Store
 
