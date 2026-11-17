@@ -85,6 +85,7 @@ plugins:
 
 nav:
   - 首页: index.md
+  - 黄皮书调用: yellowbook.md
   - 开发指南:
       - 项目结构: guide/structure.md
       - 房间过场桥接: guide/room-bridge.md
