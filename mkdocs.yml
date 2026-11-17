@@ -92,3 +92,4 @@ nav:
       - 房间过场桥接: guide/room-bridge.md
       - 全局回退系统: guide/rollback.md
   - 开发日志: devlog/index.md
+  - 关于: about.md
